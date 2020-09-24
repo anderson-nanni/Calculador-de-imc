@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="./fontawesome/css/brands.css" >
+    <link rel="stylesheet" href="./fontawesome/css/fontawesome.css" >
+    <link rel="stylesheet" href="./fontawesome/css/solid.css" >
+
+    <title>Calculo IMC</title>
+    </head>
+    <body>
+    <div class="container mt-5">
+        <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th >Nome</th>
+                <th >Sexo</th>
+                <th >Altura</th>
+                <th >Peso</th>
+                <th >IMC</th>
+            </tr>
+          </thead>
+          <tbody id="tabela">
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="fixed-bottom">
+        <div class="float-right mb-5 mr-5">
+          <button type="button" class="btn btn-lg btn-outline-success  rounded-circle shadowbg-light" data-toggle="modal" data-target="#modalIMC" id="novo">
+            <i class="fas fa-calculator"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalIMC" tabindex="-1" role="dialog" aria-labelledby="modalIMCLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalIMCLabel">Cálculo do IMC</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="form-group col-sm-8">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" class="form-control">
+                </div>
+                <div class="form-group col-sm-8">
+                    <label for="sexo">Sexo</label>
+                    <select step="any" class="form-control" id="sexo">
+                        <option value="">Seu sexo</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-8">
+                    <label for="altura">Altura</label>
+                    <input type="number" step="2" class="form-control"   id="altura">  
+                </div>
+                <div class="form-group col-sm-8">
+                    <label for="peso">Peso</label>
+                    <input type="number" step="2" class="form-control"   id="peso">
+                </div>
+                <div class="form-group col-sm-8">
+                    <label for="imc">Seu IMC</label>
+                    <input type="number" step="any" class="form-control" readonly  id="imc">
+                </div>
+
+                </div>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="salvar">Salvar Dados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./jquery/jquery-3.5.1.slim.min.js" ></script>
+    <script src="./popper/popper.min.js" ></script>
+    <script src="./bootstrap/js/bootstrap.min.js" ></script>
+
+    <script>
+        const novo=document.getElementById('novo');
+        const tabela=document.getElementById('tabela');
+
+        const nome=document.getElementById('nome');
+        const sexo=document.getElementById('sexo');
+        const altura=document.getElementById('altura');
+        const imc=document.getElementById('imc');
+        const salvar=document.getElementById('salvar');
+        //const compra=document.getElementById('compra');
+        //const total=document.getElementById('total');
+        let resImc;
+        function calc () {
+            resImc = peso.value / (altura.value * altura.value);
+            imc.value = resImc;
+        }
+        // console.log(resImc)
+        /*
+        sexo.addEventListener('change',()=>{
+            const valor=sexo.options[sexo.selectedIndex];
+            console.log(valor.text);
+            sexo.value=parseFloat(valor.value);
+            tabela= {sexo: valor.text}
+        })
+        */
+        altura.addEventListener('input',()=>{
+        
+            calc();
+            /*
+            let qtd=parseFloat(altura.value)
+            let pc=parseFloat(sexo.value)
+
+            let sub=qtd*pc
+
+            imc.value=sub;
+            tabela=Object.assign({altura:altura.value,imc:imc.value},tabela);
+            console.log(tabela);
+            */
+        })
+
+        peso.addEventListener('input',()=>{
+            calc();
+        })
+
+        salvar.addEventListener('click',()=>{
+
+            const tr=document.createElement('tr');
+            let td=`<td>${nome.value}</td>
+            <td>${sexo.value}</td>
+            <td>${altura.value}</td>
+            <td>${peso.value}</td>
+            <td>${imc.value}</td>`;
+
+            tr.innerHTML=td;
+            tabela.appendChild(tr);
+
+            nome.value=null;
+            sexo.selectedIndex=null;
+            altura.value=null;
+            peso.value=null;
+            imc.value=null;
+
+            $('#modalIMC').modal('hide');
+ 
+        });
+
+    </script>
+</body>
+</html>
